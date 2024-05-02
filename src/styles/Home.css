@@ -1,0 +1,154 @@
+.prevButton {
+    font-size: 0;
+line-height: 0;
+position: absolute;
+top: 50%;
+display: block;
+width: 4rem;
+height: 4rem;
+padding: 0;
+transform: translateY(-50%);
+cursor: pointer;
+border: none;
+left: 60px !important;
+z-index: 10;
+}
+
+.prevButton::before {
+    content: url(https://appsynergies.com/icons/left-arrow.svg) !important;
+}
+
+.nextButton {
+    font-size: 0;
+line-height: 0;
+position: absolute;
+top: 50%;
+display: block;
+width: 4rem;
+height: 4rem;
+padding: 0;
+transform: translateY(-50%);
+cursor: pointer;
+border: none;
+right: 60px !important;
+z-index: 10;
+}
+
+.nextButton::before {
+    content: url(https://appsynergies.com/icons/right-arrow.svg) !important;
+}
+
+.slick-dots {
+    position: absolute;
+    bottom: -25px;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+    bottom: 50px !important;
+}
+
+.slick-dots li {
+    font-size: 0;
+    line-height: 0;
+    display: block;
+    padding: 5px;
+    color: transparent;
+    border: 0;
+    outline: none;
+    background: transparent;
+    width: 4rem !important;
+    height: 2px;
+    position: relative;
+    display: inline-block;
+    margin: 0 5px;
+    padding: 0;
+}
+
+.slick-dots li::before {
+    content: "" !important;
+    background: #fff !important;
+    width: 40px !important;
+    height: 2.16px !important;
+    border-radius: 999px;
+}
+
+.slick-dots li.slick-active::before {
+    opacity: .95;
+    color: #000;
+}
+
+.slick-dots li::before {
+    font-family: slick;
+    font-size: 6px;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "•";
+    text-align: center;
+    opacity: .17;
+    color: #000;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* .contain {
+    width: 11200px;
+    opacity: 1;
+    transform: translate3d(-3200px, 0px, 0px);
+    transition: transform 500ms ease 0s;
+} */
+
+.slick-slide {
+    float: left;
+}
+
+[data-aos^="fade"][data-aos^="fade"].aos-animate {
+  opacity: 1;
+  transform: translateZ(0);
+}
+
+[data-aos][data-aos][data-aos-easing="ease-out-cubic"], body[data-aos-easing="ease-out-cubic"] [data-aos] {
+  transition-timing-function: cubic-bezier(.25,.46,.45,.94);
+}
+
+[data-aos][data-aos][data-aos-duration="600"], body[data-aos-duration="600"] [data-aos] {
+  transition-duration: .6s;
+}
+
+[data-aos^="fade"][data-aos^="fade"] {
+  opacity: 0;
+  transition-property: opacity,transform;
+}
+
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255/var(--tw-text-opacity));
+}
+.gap-6 {
+  gap: 1.5rem;
+}
+.flex-col {
+  flex-direction: column;
+}
+.flex {
+  display: flex;
+}
+
+/* .spanImg {
+    box-sizing: border-box;
+display: block;
+overflow: hidden;
+width: initial;
+height: initial;
+background: none;
+opacity: 1;
+border: 0px none;
+margin: 0px;
+padding: 0px;
+position: absolute;
+inset: 0px;
+} */

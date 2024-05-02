@@ -1,0 +1,75 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#loginPop {
+  /* background: rgb(19,241,252);
+  background: linear-gradient(180deg, rgba(19,241,252,1) 0%, rgba(4,112,220,1) 100%); 
+  background: rgb(19,241,252);
+  background: linear-gradient(180deg, rgba(19,241,252,1) 0%, rgba(91,36,122,1) 100%); 
+  background: rgb(19,241,252);
+  background: linear-gradient(180deg, rgba(19,241,252,1) 0%, rgba(3,110,217,1) 100%);  */
+  background: rgb(19,241,252);
+  background: linear-gradient(180deg, rgba(19,241,252,1) 0%, rgba(5,81,157,1) 100%); 
+}
+
+#background {
+  background-color: #f0f0f0;
+}
+
+@font-face {
+  font-family: "CrimsonText-Regular";   /*Can be any text*/
+  src: local("CrimsonText-Regular"),
+    url("../fonts/CrimsonText-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SignikaNegative-Bold";   /*Can be any text*/
+  src: local("SignikaNegative-Bold"),
+    url("../fonts/SignikaNegative-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SignikaNegative-Medium";   /*Can be any text*/
+  src: local("SignikaNegative-Medium"),
+    url("../fonts/SignikaNegative-Medium.ttf") format("truetype");
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
