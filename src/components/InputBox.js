@@ -17,11 +17,11 @@ export default function InputBox(props) {
         browserSupportsSpeechRecognition
     } = useSpeechRecognition();
 
-    const [text, setText] = useState(transcript)
+    const [text, setText] = useState(null)
 
-    if (!browserSupportsSpeechRecognition) {
-        return <span>Browser doesn't support speech recognition.</span>;
-    }
+    // if (!browserSupportsSpeechRecognition) {
+    //     return <span>Browser doesn't support speech recognition.</span>;
+    // }
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
@@ -34,96 +34,65 @@ export default function InputBox(props) {
                     SpeechRecognition.startListening({ continuous: true });
                 } else {
                     SpeechRecognition.stopListening();
+                    sendMessage();
                 }
             } catch (error) {
-                console.error('Error in speech recognition:', error);
-                // Handle error appropriately
+                props.handleAlert("danger", 'Error in Speech Recognition');
             }
         };
-    
-        handleSpeechRecognition(); // Execute unconditionally
-    
-        const handleTranscriptUpdate = (newTranscript) => {
-            if (listen) {
-                setText(newTranscript); // Only update text if listen is true
-            }
-        };
-    
-        const handleResult = (result) => {
-            if (result.final) {
-                handleTranscriptUpdate(result.transcript);
-            }
-        };
-    
-        SpeechRecognition.onResult(handleResult);
-    
-        // Cleanup
-        return () => {
-            SpeechRecognition.stopListening();
-            SpeechRecognition.detach();
-        };
+
+        handleSpeechRecognition();
     }, [listen]);
-    
 
+    useEffect(() => {
+        setText(transcript)
+    }, [transcript])
 
+    async function sendMessage() {
 
-    const convertFormat = (date) => {
-        const str = (date.split(","))[0].split("/")
-        var dd = str[1], mm = str[0];
-        dd = dd.length === 1 ? '0' + dd : dd;
-        mm = mm.length === 1 ? '0' + mm : mm;
-        return `${dd}/${mm}/${str[2]}`
-    }
+        if (text) {
+            try {
+                props.setLoad(true);
+                props.setBackground("brightness(0.01)");
+                const url = "http://localhost:5000/"
+                const result = await fetch(url + "generate_text", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        text: text
+                    })
+                }).then(res => res.json());
 
-    const sendMessage = () => {
-        const options = {
-            year: 'numeric',
-            month: 'numeric',
-            day: 'numeric',
-            timeZone: 'Asia/Kolkata'
-        };
+                console.log(result);
+                props.setFinalText(result.result);
 
-        const options1 = {
-            hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric',
-            hour12: true,
-            timeZone: 'Asia/Kolkata'
+                const result1 = await fetch(url + "generate_image", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        text: result.result
+                    })
+                }).then(res => res.json());
+
+                console.log(result1.image_urls)
+                const res = result1.image_urls;
+                props.setImgList(res);
+
+                props.setLoad(false);
+                props.setBackground("");
+
+                setText(null);
+                document.getElementById("searchText").value = null;
+                resetTranscript();
+            }
+            catch {
+                props.handleAlert("danger", "Unable to complete request!")
+            }
         }
-        const date = convertFormat(new Date().toLocaleTimeString('en-US', options));
-        const time = new Date().toLocaleTimeString('en-US', options1);
-        const searchText = document.getElementById("searchText").value;
-
-        var key = 0;
-
-        for (const d in props.chatData) {
-            key += props.chatData[d].length
-        }
-        const newMessage = {
-            key: String(key + 1),
-            id: props.senderId,
-            data: searchText,
-            time: time
-        }
-
-        if (props.chatData[date]) {
-            // If the date exists, push the newMessage object into the array
-            props.setChatData(prevChatData => ({
-                ...prevChatData,
-                [date]: [...prevChatData[date], newMessage]
-            }));
-        } else {
-            // If the date doesn't exist, create a new key-value pair with the new date and initialize it with an array containing the newMessage object
-            props.setChatData(prevChatData => ({
-                ...prevChatData,
-                [date]: [newMessage]
-            }));
-        }
-
-        props.sendMessageSocket(searchText, props.email)
-
-        document.getElementById("searchText").value = "";
-        props.setCountMessages(props.countMessages + 1);
     }
 
     return (
@@ -136,6 +105,7 @@ export default function InputBox(props) {
                     placeholder="Type here..."
                     value={text}
                     style={{ backgroundColor: 'white' }}
+                    onChange={(e) => setText(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' ?
                         sendMessage() : undefined}
                 // onChange={(e) => setSearchText(e.target.value)}

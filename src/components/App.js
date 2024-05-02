@@ -42,6 +42,11 @@ function App() {
     }
   }
 
+  function setBackground(value) {
+    const bg = document.getElementById("background");
+    bg.style.filter = value;
+  }
+
   return (
     <>
       {alert ? <AlertIcon alert={alert} /> : undefined}
@@ -63,8 +68,8 @@ function App() {
           />
           <Route path='/app' element={
             <>
-              <Header homePage={false} mediaWidth={mediaWidth} page={"about"} />
-              <MainFile />
+              <Header homePage={false} mediaWidth={mediaWidth} />
+              <MainFile handleAlert={handleAlert} setLoad={setLoad} setBackground={setBackground}/>
             </>
           } />
         </Routes>

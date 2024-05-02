@@ -1,0 +1,15 @@
+.image-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly; /* Distribute items evenly */
+}
+
+.imageContainer {
+    width: calc(65%); /* Two images per row with spacing */
+    margin-bottom: 10px; /* Spacing between rows */
+    height: 50%;
+}
+
+.imageContainer img {
+    width: 65%;
+}
